@@ -1,0 +1,28 @@
+
+.appBody {
+    background-color: #ffeaa7;
+    min-height: 70vh;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: hsl(198, 1%, 29%);
+    font-family: "Architects Daughter", cursive;
+    text-align: center;
+    font-size: 130%;
+  }
+
+  .calendarBody {
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: normal;
+    background: #ffeaa7;
+    color: gray; }
+
+    .toDo {
+      color: #fff; }
+      .toDo:after {
+        background: #fdcb6e; }
+
