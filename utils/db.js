@@ -1,5 +1,3 @@
-// utils/db.js
-
 import mongoose from "mongoose";
 
 const connection = {};
@@ -10,7 +8,7 @@ async function connectDB() {
   }
 
   try {
-    const db = await mongoose.connect('mongodb://127.0.0.1:27017/nextKeeperAppDB', {
+    const db = mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -23,4 +21,3 @@ async function connectDB() {
 }
 
 export default connectDB;
-

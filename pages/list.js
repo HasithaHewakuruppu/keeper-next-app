@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ToDoItem from "../components/ToDoItem";
-import InputArea from "../components/InputArea";
+import ToDoItem from "../components/toDoItem"
+import InputArea from "../components/inputArea";
 import styles from '../styles/app.module.css'
 
 function List(props) {
