@@ -19,6 +19,7 @@
     line-height: 1.8;
     font-weight: normal;
     background: #ffeaa7;
+    transform: scale(1);
     color: gray; }
 
     .toDo {
