@@ -1,44 +1,49 @@
-import React, { useState } from "react";
-import Layout from "../components/layout";
-import Link from "next/link";
-import { useRouter } from "next/router"; 
+import React, { useState } from 'react';
+import Layout from '../components/layout';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { PulseLoader } from 'react-spinners';
+import Swal from 'sweetalert2'
 
 function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter(); 
- 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await fetch("/api/signIn", {
-        method: "POST",
+      setLoading(true); // Start loading
+
+      const response = await fetch('/api/signIn', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username:email, password }),
+        body: JSON.stringify({ username: email, password }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        alert("Sign-in successful");
-        router.push("/list");
+        Swal.fire({title:'Sign-in successful',background: '#fdcb6e',confirmButtonColor:'black'});
+        router.push('/list');
       } else {
         // Sign-in failed
-        if (data.reason === "not_registered") {
-          alert("Sign-in failed: User not registered");
-        } else if (data.reason === "wrong_password") {
-          alert("Sign-in failed: Wrong password");
+        if (data.reason === 'not_registered') {
+          Swal.fire({title:'Sign-in failed: Not registered',background: '#fdcb6e',confirmButtonColor:'black'});
+        } else if (data.reason === 'wrong_password', { className: "alert" }) {
+          Swal.fire({title:'Sign-in failed: Wrong password',background: '#fdcb6e',confirmButtonColor:'black'});
         } else {
-          alert("Sign-in failed: Internal Error");
+          Swal.fire({title:'Sign-in failed: Internal Error',background: '#fdcb6e',confirmButtonColor:'black'});
         }
       }
-
     } catch (error) {
       alert(error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -71,12 +76,19 @@ function SignIn() {
             />
           </div>
 
-          <button
-            className="btn btn-sm btn-primary btn-block myButton btn-outline-dark"
-            type="submit"
-          >
-            LogIn
-          </button>
+          {isLoading ? (
+            <div className="spinner-container">
+              <PulseLoader color="#fdcb6e" loading={true}/>
+            </div>
+          ) : (
+            <button
+              className="btn btn-sm btn-primary btn-block myButton btn-outline-dark"
+              type="submit"
+            >
+              LogIn
+            </button>
+          )}
+
         </form>
       </div>
 

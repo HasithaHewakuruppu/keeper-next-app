@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Layout from "../components/layout";
+import { PulseLoader } from 'react-spinners';
+import Swal from 'sweetalert2'
+
 
 function SignUp() {
 
@@ -7,11 +10,13 @@ function SignUp() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
   try {
+    setLoading(true); 
     const response = await fetch("api/signUp", {
       method: "POST",
       headers: {
@@ -26,22 +31,23 @@ function SignUp() {
     });
 
     const data = await response.json();
+    setLoading(false); 
 
     if (data.registered) {
       // Registration successful
-      // Perform any necessary actions, such as redirecting the user
-      alert("Registration successful");
+      Swal.fire({title:"Registration successful",background: '#fdcb6e',confirmButtonColor:'black'});
       window.location.href = "/"; 
     } else {
       // Registration failed
-      // Handle the error response from your backend API
-      alert(data.error.message);
+      Swal.fire({title:data.error.message,background: '#fdcb6e',confirmButtonColor:'black'});
     }
+
   } catch (error) {
     // Handle network errors or other exceptions
     console.log(error);
-    alert(error);
+    Swal.fire({title:data.error.message,background: '#fdcb6e',confirmButtonColor:'black'});
   }
+ 
   };
 
   return (
@@ -92,9 +98,16 @@ function SignUp() {
             />
           </div>
 
-          <button className="btn btn-sm btn-primary btn-block myButton btn-outline-dark" type="submit">
+          {isLoading ? (
+            <div className="spinner-container">
+              <PulseLoader color="#fdcb6e" loading={true}/>
+            </div>
+          ) : (
+            <button className="btn btn-sm btn-primary btn-block myButton btn-outline-dark" type="submit">
             Register
-          </button>
+            </button>
+          )}
+
         </form>
       </div>
 
