@@ -4,12 +4,6 @@
   }
 }
 
-@media only screen and (max-width: 480px) {
-  body {
-    transform: scale(1.2);
-  }
-}
-
 .mainContainer{
   display: flex;
 }
